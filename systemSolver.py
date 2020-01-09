@@ -39,7 +39,7 @@ def solvePosition(currentPosition, velocity, timestep):
 def solveAcceleratingSystem(currentSystem, executeFunction, executeEveryNthSecond ):
   i=0
   timestep = systemConstants.timestep
-  while currentSystem.endCondition() == False:
+  while currentSystem.endConditionReached() == False:
     currentSystem.previousState = currentSystem.state
     currentSystem.state.time += timestep
     currentSystem.state.acceleration = currentSystem.acceleration()
