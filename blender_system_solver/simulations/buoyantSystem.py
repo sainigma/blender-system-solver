@@ -74,7 +74,7 @@ class buoyantSystem:
     if self.useLinearFill:
       self.linearFill()
     forceGravity = -self.caseConstants.mass * solver.systemConstants.gravity
-    forceBuyoancy = self.density * ( self.caseConstants.outerVolume - self.caseConstants.innerVolume * self.fillCoefficient )
+    forceBuyoancy = (self.density * ( self.caseConstants.outerVolume - self.caseConstants.innerVolume * self.fillCoefficient )) * solver.systemConstants.gravity
     forceDrag = solver.dragEquation(self.state.velocity.y, self.caseConstants.dragCoefficient, self.caseConstants.dragArea, self.density)
 
     if ( self.state.velocity.y > 0 and forceDrag > 0 ) or ( self.state.velocity.y < 0 and forceDrag < 0 ):

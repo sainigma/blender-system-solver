@@ -38,7 +38,7 @@ class SimProperties(PropertyGroup):
     startFrame: IntProperty(
       name = "Start frame",
       min = 0,
-      max = 3600
+      max = 360000
     )
 
     simulationMaxtime: FloatProperty(
