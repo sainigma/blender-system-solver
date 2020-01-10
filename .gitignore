@@ -1,5 +1,7 @@
-buoyantSystem.py
-buoyantCases.py
-blenderKeyframeAcceleration.py
-__pycache__/
+.vscode
 testFile.blend1
+/blenderSystemSolver/__pycache__/*
+/blenderSystemSolver/debug/__pycache__/*
+/blenderSystemSolver/modules/__pycache__/*
+/blenderSystemSolver/simulations/__pycache__/*
+/blenderSystemSolver/utils/__pycache__/*
