@@ -46,6 +46,6 @@ def solveAcceleratingSystem(currentSystem, executeFunction, executeEveryNthSecon
     currentSystem.state.velocity = solveVelocity(currentSystem.state.velocity, currentSystem.state.acceleration, currentSystem.previousState.acceleration, timestep)
     currentSystem.state.position = solvePosition(currentSystem.state.position, currentSystem.state.velocity, timestep)
     if i>=executeEveryNthSecond:
-      executeFunction(currentSystem.state, currentSystem.offsetTime)
+      executeFunction(currentSystem.state, currentSystem.offsetTime, currentSystem.progress)
       i=0
     i+=timestep

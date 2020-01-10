@@ -1,7 +1,7 @@
 .vscode
 testFile.blend1
-/blenderSystemSolver/__pycache__/*
-/blenderSystemSolver/debug/__pycache__/*
-/blenderSystemSolver/modules/__pycache__/*
-/blenderSystemSolver/simulations/__pycache__/*
-/blenderSystemSolver/utils/__pycache__/*
+/blender_system_solver/__pycache__/*
+/blender_system_solver/debug/__pycache__/*
+/blender_system_solver/modules/__pycache__/*
+/blender_system_solver/simulations/__pycache__/*
+/blender_system_solver/utils/__pycache__/*

@@ -1,4 +1,4 @@
-from simulations import buoyantSystem
+from blender_system_solver.simulations import buoyantSystem
 
 def createBuoyantSystem(outputFunction, props):
   buoyantObject = buoyantSystem.buoyantSystem()

@@ -1,8 +1,8 @@
 from modules import systemSolver as solver
 
 def outputToConsole(currentSystem):
-  def printOutput(state, offsetTime):
-    print("time:",currentSystem.state.time+offsetTime,"position:",currentSystem.state.position.y)
+  def printOutput(state, offsetTime, progress):
+    print("time:",currentSystem.state.time+offsetTime,"position:",currentSystem.state.position.y,"progress:",progress)
   solver.solveAcceleratingSystem(currentSystem, printOutput, 1)
 
 def runCase(caseToRun, props):

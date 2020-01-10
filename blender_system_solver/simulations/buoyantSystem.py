@@ -1,4 +1,4 @@
-from modules import systemSolver as solver
+from blender_system_solver.modules import systemSolver as solver
 
 class buoyantSystem:
   
@@ -25,6 +25,8 @@ class buoyantSystem:
   siphonForce = 0
   work = 0
   
+  progress = 0
+
   class caseConstants:
     mass = 2440
     outerVolume = 33.2            #m^3
@@ -93,6 +95,7 @@ class buoyantSystem:
     return resultAcceleration
 
   def endConditionReached(self):
+    self.progress = int(100*(1-abs((self.state.position.y - self.endPosition.y)/(self.initialPositionY-self.endPosition.y))))
     if self.floating:
       return (self.useEndPosition[0] and self.state.position.x > self.endPosition.x) or \
         (self.useEndPosition[1] and self.state.position.y > self.endPosition.y) or \

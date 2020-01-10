@@ -17,7 +17,7 @@ bl_info = {
     "category": "Development"
 }
 import bpy
-from .utils import blenderRunSolver
+from blender_system_solver.utils import blenderRunSolver
 
 from bpy.props import (StringProperty,
                        BoolProperty,
