@@ -1,6 +1,6 @@
 debug = False
 if debug:
-    from debug import textOutput
+    from blender_system_solver.debug import textOutput
     textOutput.runDebug(None)
     quit()
 
@@ -132,8 +132,14 @@ class SimProperties(PropertyGroup):
       name = "Time to fill",
       default = 30,
       min = 0,
-      max = 240,
-      subtype = "TIME"
+      max = 240
+    )
+
+    additionalDragCoefficient: FloatProperty(
+      name = "Additional drag coefficient",
+      default = 0,
+      min = 0,
+      max = 0.99
     )
 
     simulationType: EnumProperty(
@@ -188,7 +194,8 @@ class WM_OT_RunBuoyantSimulation(Operator):
           'endPositionY':mytool.endPositionY,
           'initialFillCoefficient':mytool.initialFill,
           'finalFillCoefficient':mytool.finalFill,
-          'timeToFill':mytool.timeToFill
+          'timeToFill':mytool.timeToFill,
+          'additionalDragCoefficient':mytool.additionalDragCoefficient
         })
 
         blenderRunSolver.runCase(mytool.simulationType, simProps)
@@ -239,6 +246,9 @@ class OBJECT_PT_CustomPanel(Panel):
             layout.prop(mytool, "finalFill")
             layout.prop(mytool, "timeToFill")
             layout.separator()
+            layout.label(text="Misc")
+            layout.prop(mytool, "additionalDragCoefficient")
+            layout.separator()
           layout.operator("wm.run_buoyant_reverse")
           layout.operator("wm.run_buoyantsimulation")
 
@@ -261,6 +271,3 @@ def unregister():
     for cls in reversed(classes):
         unregister_class(cls)
     del bpy.types.Scene.my_tool
-
-if __name__ == "__main__":
-    register()

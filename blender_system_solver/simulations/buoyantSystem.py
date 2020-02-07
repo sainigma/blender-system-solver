@@ -22,11 +22,12 @@ class buoyantSystem:
   fillCoefficient = None
   finalFillCoefficient = None
   
-  siphonForce = 0
+  additionalDragCoefficient = 0
   work = 0
-  
-  progress = 0
+  workGravity = 0
+  workDrag = 0
 
+  progress = 0
   class caseConstants:
     mass = 2440
     outerVolume = 33.2            #m^3
@@ -40,6 +41,8 @@ class buoyantSystem:
 
     if 'offsetTime' in props:
       self.offsetTime = props['offsetTime']
+    if 'additionalDragCoefficient' in props:
+      self.additionalDragCoefficient = props['additionalDragCoefficient']
     self.endtime = props['endtime']
     self.caseConstants.mass = props['mass']
     self.caseConstants.innerVolume = props['innerVolume']
@@ -73,17 +76,23 @@ class buoyantSystem:
   def acceleration(self):
     if self.useLinearFill:
       self.linearFill()
-    forceGravity = -self.caseConstants.mass * solver.systemConstants.gravity
-    forceBuyoancy = (self.density * ( self.caseConstants.outerVolume - self.caseConstants.innerVolume * self.fillCoefficient )) * solver.systemConstants.gravity
+    forceGravity = -(self.caseConstants.mass + self.density * self.caseConstants.innerVolume * self.fillCoefficient) * solver.systemConstants.gravity
+    forceBuyoancy = (self.density * self.caseConstants.outerVolume ) * solver.systemConstants.gravity
     forceDrag = solver.dragEquation(self.state.velocity.y, self.caseConstants.dragCoefficient, self.caseConstants.dragArea, self.density)
 
     if ( self.state.velocity.y > 0 and forceDrag > 0 ) or ( self.state.velocity.y < 0 and forceDrag < 0 ):
       forceDrag *= -1
 
     netForces = forceGravity + forceBuyoancy + forceDrag
-    if self.siphonForce > 0 and (netForces + self.siphonForce) < 0:
-      netForces += self.siphonForce
-      self.work += self.siphonForce * solver.systemConstants.timestep
+    
+    self.workGravity += ((forceGravity-forceBuyoancy)*self.state.velocity.y)*solver.systemConstants.timestep
+    self.workDrag += (forceDrag*self.state.velocity.y)*solver.systemConstants.timestep
+    if self.additionalDragCoefficient > 0 and netForces < 0:
+      tempAdditionalDrag = abs(0 - netForces)*self.additionalDragCoefficient
+      tempPowerloss = abs(tempAdditionalDrag*self.state.velocity.y)
+      netForces += tempAdditionalDrag
+      self.work += tempPowerloss*solver.systemConstants.timestep
+      
     resultAcceleration = solver.cartesianCoordinate()
     resultAcceleration.y = netForces/self.caseConstants.mass
 
